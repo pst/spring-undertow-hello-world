@@ -20,27 +20,30 @@ spec:
         args:
         - -XX:+UnlockExperimentalVMOptions
         - -XX:+UseCGroupMemoryLimitForHeap
+        - -XX:+PrintFlagsFinal
         resources:
           requests:
             memory: "512Mi"
-            cpu: "200m"
+            cpu: "300m"
           limits:
             memory: "512Mi"
-            cpu: "200m"
+            cpu: "1000m"
         readinessProbe:
           exec:
             command:
-            - curl
+            - wget
+            - -O readineness
             - http://localhost:8080/
-          initialDelaySeconds: 90
+          initialDelaySeconds: 15
           periodSeconds: 5
-          failureThreshold: 10
+          failureThreshold: 6
         livenessProbe:
           exec:
             command:
-            - curl
+            - wget
+            - -O liveness
             - http://localhost:8080/
-          initialDelaySeconds: 120
+          initialDelaySeconds: 30
           periodSeconds: 5
           failureThreshold: 3
 

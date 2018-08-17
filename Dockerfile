@@ -16,8 +16,6 @@ RUN mvn package
 #
 FROM openjdk:8-jdk-alpine AS prod
 
-RUN apk --no-cache add curl
-
 COPY --from=build /build/target/*.jar /app/app.jar
 
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
